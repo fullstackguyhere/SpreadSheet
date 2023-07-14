@@ -48,12 +48,12 @@ public class FormulaEvaluator {
      * @param operandStack
      * @param operatorStack
      * @param formula
-     * @return
+     * @return true or false
      */
     private static boolean processToken(Sheet sheet, String token, Stack<Integer> operandStack,
                                         Stack<String> operatorStack, String formula) {
         if (sheet.hasCell(token)) {
-            processCellToken(sheet, token, operandStack, formula);
+            return processCellToken(sheet, token, operandStack, formula);
         } else if (token.matches("\\d+")) {
             operandStack.push(Integer.parseInt(token));
         } else if (token.matches("[+\\-*/]")) {
@@ -71,13 +71,16 @@ public class FormulaEvaluator {
      * @param token
      * @param operandStack
      * @param formula
+     * @return true or false
      */
-    private static void processCellToken(Sheet sheet, String token, Stack<Integer> operandStack, String formula) {
+    private static boolean processCellToken(Sheet sheet, String token, Stack<Integer> operandStack, String formula) {
         Object cellValue = sheet.getCellValue(token);
         if (cellValue instanceof Integer) {
             operandStack.push((Integer) cellValue);
+            return true;
         } else {
-            System.out.println("Invalid cell id in formula: " + formula);
+            System.out.println("Invalid cell value in formula: " + formula);
+            return false;
         }
     }
 
@@ -98,7 +101,7 @@ public class FormulaEvaluator {
      * Very basic precedence checker
      * @param op1
      * @param op2
-     * @return
+     * @return true or false
      */
     private static boolean hasPrecedence(String op1, String op2) {
         return OPERATOR_PRECEDENCE.getOrDefault(op1, -1) <= OPERATOR_PRECEDENCE.getOrDefault(op2, -1);

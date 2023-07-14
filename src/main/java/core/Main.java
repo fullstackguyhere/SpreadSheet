@@ -17,7 +17,7 @@ public class Main {
 
         System.out.println(spreadSheet.getCellValue("A3")); // Output: 27
 
-        spreadSheet.setCellValue("A4", "=A1+A2*A3");
+        spreadSheet.setCellValue("A4", "=A1+A2+A3");
 
         System.out.println(spreadSheet.getCellValue("A4")); // Output: 54
     }

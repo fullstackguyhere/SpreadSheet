@@ -27,7 +27,7 @@ public class SpreadSheet {
         if (!sheets.containsKey(sheetName)) {
             Sheet sheet = new Sheet();
             sheets.put(sheetName, sheet);
-            //currentSheet = sheet;
+            currentSheet = sheet;
             return sheet;
         } else {
             System.out.println("Sheet with the same name already exists.");
